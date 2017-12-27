@@ -6,7 +6,7 @@ O candidato deve implementar um sistema que faça uma requisição HTTP simples 
 
 Orientações para a etapa 2:
 - Esse sistema não é acessível pelo usuário final, não tendo qualquer tipo de painel de gerenciamento.
-- O candidato pode implementar da meneira que julgar necessário um sistema que leia constantemente as URLs cadastradas pelo sistema da etapa 1, faça uma requisição HTTP à URL e armazene a resposta e o status code onde fiquem acessíveis pelo sistema da etapa 1.
+- O candidato pode implementar, da maneira que julgar necessário, um sistema que leia constantemente as URLs cadastradas pelo sistema da etapa 1, faça uma requisição HTTP à URL e armazene a resposta e o status code onde fiquem acessíveis pelo sistema da etapa 1.
 
 Orientações gerais e extras:
 - O sistema 2 pode ser implementado como um daemon, lançando dois processos filhos para efetivamentne executarem o trabalho de acessar as URLs que estão na fila e armazenar o resultado desse acesso.
