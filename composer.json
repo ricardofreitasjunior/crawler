@@ -1,0 +1,19 @@
+{
+  "name": "ricardofreitasjunior/crawler",
+  "description": "sistema que faça uma requisição HTTP simples a uma lista de URLs cadastradas por outro sistema. Para cada requisição a resposta deve ser armazenada de forma que o sistema 1 tenha acesso, bem como o 'status code' da resposta",
+  "authors": [{
+      "name": "Ricardo Freitas Jr",
+      "email": "contato@ricardofreitasjunior.com.br",
+      "homepage": "https://www.ricardofreitasjunior.com.br"
+    }],
+  "minimum-stability": "dev",
+  "require": {
+    "php": ">=5.6"
+  },
+  "autoload":{
+    "psr-4":{
+      "ricardo\\":"vendor/ricardo/",
+      "App\\":"App/"
+    }
+  }
+}
