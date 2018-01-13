@@ -24,67 +24,68 @@ class UrlsController extends Action {
     $query = array('conditions' => array('status' => 'Pendente'));
     $this->url->result = $this->url->select($query);
 
-    foreach ($this->url->result as $key => $item) {
-      echo '<div style="background-color: #EFEFEF; padding: 10px;">';
-      $item['status'] = explode(' ', $item['status']);
-      var_dump($item);
-      
+    if (!empty($this->url->result)) {
+      foreach ($this->url->result as $key => $item) {
+//	echo '<div style="background-color: #EFEFEF; padding: 10px;">';
+//	$item['status'] = explode(' ', $item['status']);
+	var_dump($item);
 
-      $html = new simple_html_dom();
-      if ($html->load_file($item['url'])) {
+	$html = new simple_html_dom();
+	if ($html->load_file($item['url'])) {
+	  /* correcao das urls */
+	  $old = array();
+	  $new = array();
 
-	/* correcao das urls */
-	$old = array();
-	$new = array();
+	  /* css to perfect url */
+	  foreach ($html->find("link") as $index => $link) {
+	    $old[] = $link->href;
+	    $new[] = $this->perfect_url($link->href, $item['url']);
+	  }
 
-	/* css to perfect url */
-	foreach ($html->find("link") as $index => $link) {
-	  $old[] = $link->href;
-	  $new[] = $this->perfect_url($link->href, $item['url']);
+	  /* js to perfect url */
+	  foreach ($html->find("script") as $link) {
+	    $old[] = $link->src;
+	    $new[] = $this->perfect_url($link->src, $item['url']);
+	  }
+	  /* outras possíveis validações de url podem ser implementadas futuramente */
+
+	  $html->content = str_replace($old, $new, $html->content);
+	  /* valida folder */
+	  $url = parse_url($item['url']);
+	  $this->baseDir = $_SERVER['HTTP_HOST'] . '/public/files/';
+	  $this->folder = $this->toSecurity($item['id_user']) . '/' . $url['host'];
+	  if (!file_exists($this->baseDir . $this->folder) && !is_dir($this->baseDir . $this->folder)) {
+	    mkdir($this->baseDir . $this->folder, 0777, true);
+	  }
+	  $this->file = $this->baseDir . $this->folder . '/index.html';
+
+	  /* cria o arquivo */
+	  $myfile = fopen($this->file, "w") or die("Unable to open file!");
+	  fwrite($myfile, $html->content);
+	  fclose($myfile);
+//	  $item['path'] = (isset($_SERVER['HTTPS']) ? "https://" : "http://") . $this->baseDir . $this->folder;
+	  $item['path'] = $this->folder;
 	}
 
-	/* js to perfect url */
-	foreach ($html->find("script") as $link) {
-	  $old[] = $link->src;
-	  $new[] = $this->perfect_url($link->src, $item['url']);
-	}
-	/* outras possíveis validações de url podem ser implementadas futuramente */
+	$html->response = $this->parseHeaders($html->response);
+	$item['status'] = $html->response['type'];
+	$item['status_code'] = $html->response['status_code'];
+	$item['modified'] = date("Y-m-d H:i:s");
+	$this->url->data = $item;
 
-	$html->content = str_replace($old, $new, $html->content);
-
-	/* valida folder */
-	$url = parse_url($item['url']);
-	$this->baseDir = $_SERVER['DOCUMENT_ROOT'] . 'public/';
-	$this->folder = 'files/' . $this->toSecurity($item['id_user']) . '/' . $url['host'];
-	var_dump($this->folder);
-	if (!file_exists($this->baseDir . $this->folder) && !is_dir($this->baseDir . $this->folder)) {
-	  mkdir($this->baseDir . $this->folder, 0777, true);
+	/*  Atualiza o status da url */
+	if ($this->url->update()) {
+	  var_dump($this->url->data);
+	} else {
+	  var_dump('Não foi possível salvar a URL.');
 	}
-	$this->file = $this->baseDir . $this->folder . '/index.html';
-	
-	/* cria o arquivo */
-	$myfile = fopen($this->file, "w") or die("Unable to open file!");
-	fwrite($myfile, $html->content);
-	fclose($myfile);
+	echo '</div>';
+	echo '<hr>';
       }
-      
-      $html->response = $this->parseHeaders($html->response);
-      $item['path'] = $this->folder;
-      
-      $item['status'] = json_encode($html->response);
-      $item['modified'] = date("Y-m-d H:i:s");
-      $this->url->data = $item;
-
-      /*  Atualiza o status da url */
-      if ($this->url->update()) {
-	var_dump($this->url->data);
-      } else {
-	var_dump('Não foi possível salvar a URL.');
-      }
-      echo '</div>';
-      echo '<hr>';
+//      var_dump($this->url->result);
+    } else {
+      var_dump('Não existem registros para serem atualizados');
     }
-    var_dump($this->url->result);
   }
 
   private function rel2abs($rel, $base) {
@@ -142,15 +143,6 @@ class UrlsController extends Action {
 	  $head['type'] = intval($out[1]);
 	}
       }
-//      if (isset($t[1])) {
-//	$head[trim($t[0])] = trim($t[1]);
-//      } else {
-//	$head[] = $v;
-//	if (preg_match("#HTTP/[0-9\.]+\s+([0-9]+)#", $v, $out)) {
-//	  $head[0] = $v;
-//	  $head['reponse_code'] = intval($out[1]);
-//	}
-//      }
     }
     $head['type'] = $this->http_response_code($head['type']);
 //    var_dump($response_code);
@@ -237,7 +229,7 @@ class UrlsController extends Action {
 	break;
       default:
 //	$status_code = 'Status Code Desconhecido: "' . htmlentities($code) . '"';
-	$status_code = 'Warning';
+	$status_code = 'Pendente';
 	break;
     }
 

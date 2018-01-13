@@ -1087,11 +1087,11 @@ class simple_html_dom
 	$this->response = $http_response_header;
         $this->load($this->content, true);
         // Throw an error if we can't properly load the dom.
-        if (($error=error_get_last())!==null) {
-            $this->clear();
-            return false;
-	}else{
+        if ($this->content) {
 	  return true;
+	}else{
+	  $this->clear();
+	  return false;
         }
     }
 
