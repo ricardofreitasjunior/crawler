@@ -18,7 +18,9 @@ Orientações gerais e extras:
 
 ### Banco de dados
 - App/Config/Database
+-- Importante: este protótipo foi desenvolvido utilizando o php 5.6 e o mysql 5.7
 -- Informação os dados de acesso no array $localhost
+-- importar o arquivo database.sql para o seu banco de dados
 
 ### Execução do sistema
 - dentro da pasta /public executar o seguinte comando em seu terminal: php -S localhost:8080
