@@ -13,3 +13,17 @@ Orientações gerais e extras:
 - A implementação pode ser feita em qualquer plataforma, AWS, Azure, Linode, ... quaisquer custos decorrentes da implementação desses sistemas será reembolsado até o limite de R$ 100,00.
 - É permitido ao usuário a utilização de qualquer framework ou tecnologia que facilite ou mesmo implemente exatamente o que está sendo requisitado nas etapas 1 e 2. Por exemplo, Laravel Queues (https://laravel.com/docs/5.5/queues).
 - Não é requisito, mas um diferencial àqueles candidatos que implementarem o sistema 1 utilizando alguma tecnologia de frontend como Bootstrap, ExtJS, React, VueJS, etc.
+
+## Configurações
+
+### Banco de dados
+- App/Config/Database
+-- Informação os dados de acesso no array $localhost
+
+### Execução do sistema
+- dentro da pasta /public executar o seguinte comando em seu terminal: php -S localhost:8080
+- acessando a url do sistema, automaticamente executará o crawler
+--------------------------------------------------------------------------------
+
+## @todo:
+- Salvar arquivos internos da Url cadastrada, tipo css, js, mp4, jpeg,...

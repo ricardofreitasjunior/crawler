@@ -26,8 +26,6 @@ class UrlsController extends Action {
 
     if (!empty($this->url->result)) {
       foreach ($this->url->result as $key => $item) {
-//	echo '<div style="background-color: #EFEFEF; padding: 10px;">';
-//	$item['status'] = explode(' ', $item['status']);
 	var_dump($item);
 
 	$html = new simple_html_dom();
@@ -52,7 +50,7 @@ class UrlsController extends Action {
 	  $html->content = str_replace($old, $new, $html->content);
 	  /* valida folder */
 	  $url = parse_url($item['url']);
-	  $this->baseDir = $_SERVER['HTTP_HOST'] . '/public/files/';
+	  $this->baseDir = 'files/';
 	  $this->folder = $this->toSecurity($item['id_user']) . '/' . $url['host'];
 	  if (!file_exists($this->baseDir . $this->folder) && !is_dir($this->baseDir . $this->folder)) {
 	    mkdir($this->baseDir . $this->folder, 0777, true);
@@ -63,8 +61,7 @@ class UrlsController extends Action {
 	  $myfile = fopen($this->file, "w") or die("Unable to open file!");
 	  fwrite($myfile, $html->content);
 	  fclose($myfile);
-//	  $item['path'] = (isset($_SERVER['HTTPS']) ? "https://" : "http://") . $this->baseDir . $this->folder;
-	  $item['path'] = $this->folder;
+	  $item['path'] = (isset($_SERVER['HTTPS']) ? "https://" : "http://") . $_SERVER['HTTP_HOST'] . '/public/files/' . $this->folder;
 	}
 
 	$html->response = $this->parseHeaders($html->response);
@@ -82,7 +79,6 @@ class UrlsController extends Action {
 	echo '</div>';
 	echo '<hr>';
       }
-//      var_dump($this->url->result);
     } else {
       var_dump('Não existem registros para serem atualizados');
     }

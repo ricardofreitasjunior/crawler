@@ -2,11 +2,7 @@
 
 require_once "../vendor/autoload.php";
 
-use App\Route;
+use App\Config\Route;
 
 $route = new Route();
-
-
-//$shell = new Crawler_Shell_Run();
-//$shell->init()->run();
 ?>

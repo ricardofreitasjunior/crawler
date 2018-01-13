@@ -6,7 +6,7 @@
  * @author Ricardo Freitas Jr
  */
 
-namespace App;
+namespace app\Config;
 
 use ricardo\Init\Bootstrap;
 

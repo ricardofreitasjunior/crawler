@@ -57,14 +57,6 @@ abstract class Table {
   }
 
   public function update() {
-
-//    $query = array('conditions' => array('id' => $this->data['id'], 'id_user' => $this->data['id_user']));
-//    $result = $this->findById($this->data['id']);
-//    if (empty($result)) {
-//      var_dump(array("<b>Erro!</b> Não foi possível encontrar esta Url cadastra para o seu usuário"));
-//      return false;
-//    }
-
     try {
       foreach ($this->data as $key => $value):
 	$places[] = $key . ' = :' . $key;

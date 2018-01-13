@@ -16,14 +16,11 @@ abstract class Action {
 
   protected $layout = 'default';
   protected $view;
-//  protected $html;
-//  protected $message;
   private $controller;
   private $action;
 
   public function __construct() {
     $this->view = new \stdClass();
-//    $this->message = new Message();
   }
 
   protected function getController() {
@@ -33,7 +30,6 @@ abstract class Action {
   }
 
   protected function render($action, $layout = true) {
-//    $this->html = new Html();
 
     $this->getController();
     $this->action = $action;

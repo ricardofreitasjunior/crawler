@@ -10,26 +10,26 @@ namespace app\Config;
 
 class Database {
 
-    protected static $producao = array(
-//        'datasource' => 'Database/Mysql',
-//        'persistent' => true,
-        'host' => '',
-        'login' => '',
-        'password' => '',
-        'database' => '',
-//        'prefix' => '',
-            //'encoding' => 'utf8',
-    );
-    protected static $homologacao = array(
-//        'datasource' => 'Database/Mysql',
-//        'persistent' => false,
-        'host' => '',
-        'login' => '',
-        'password' => '',
-        'database' => '',
-//        'prefix' => '',
-            //'encoding' => 'utf8',
-    );
+//    protected static $producao = array(
+////        'datasource' => 'Database/Mysql',
+////        'persistent' => true,
+//        'host' => '',
+//        'login' => '',
+//        'password' => '',
+//        'database' => '',
+////        'prefix' => '',
+//            //'encoding' => 'utf8',
+//    );
+//    protected static $homologacao = array(
+////        'datasource' => 'Database/Mysql',
+////        'persistent' => false,
+//        'host' => '',
+//        'login' => '',
+//        'password' => '',
+//        'database' => '',
+////        'prefix' => '',
+//            //'encoding' => 'utf8',
+//    );
     protected static $localhost = array(
 //        'datasource' => 'Database/Mysql',
 //        'persistent' => false,

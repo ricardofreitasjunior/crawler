@@ -21,8 +21,6 @@ abstract class Bootstrap {
 
   protected function run($url) {
     array_walk($this->routes, function ($route) use ($url) {
-//      var_dump($url);
-//      var_dump($route['route']);
       if ($url == $route['route']) {
 	$class = "App\\Controllers\\" . ucfirst($route['controller']);
 	$controller = new $class;
