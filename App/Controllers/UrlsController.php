@@ -102,7 +102,7 @@ class UrlsController extends Action {
     $abs = "$host$path/$rel";
     $re = array('#(/\.?/)#', '#/(?!\.\.)[^/]+/\.\./#');
     for ($n = 1; $n > 0; $abs = preg_replace($re, '/', $abs, -1, $n)) {
-      
+
     }
 
     $abs = str_replace("../", "", $abs);
@@ -112,11 +112,14 @@ class UrlsController extends Action {
 
   private function perfect_url($u, $b) {
     $bp = parse_url($b);
+    if (!isset($bp['path']))
+      $bp['path'] = '';
+
     if (($bp['path'] != "/" && $bp['path'] != "") || $bp['path'] == '') {
       if ($bp['scheme'] == "") {
-	$scheme = "http";
+        $scheme = "http";
       } else {
-	$scheme = $bp['scheme'];
+        $scheme = $bp['scheme'];
       }
       $b = $scheme . "://" . $bp['host'] . "/";
     }
